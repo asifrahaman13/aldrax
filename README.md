@@ -1,5 +1,10 @@
 ## Contribution guidelines  👨🏻‍🚀
 
+![Screenshot from 2024-07-15 20-56-59](https://github.com/user-attachments/assets/f7ac3f35-9be1-4c69-90ef-2fe3d9026faa)
+![Screenshot from 2024-07-15 20-56-22](https://github.com/user-attachments/assets/b8908893-2150-4dff-814e-934e65809054)
+![Screenshot from 2024-07-15 20-58-27](https://github.com/user-attachments/assets/eddbaf9f-7ec7-47a0-bf15-c362f25e7227)
+
+
 - First, pull the repository. `git clone https://github.com/asifrahaman13/aldrax.git`
 
 - Go to the root directory. `cd superquery`
