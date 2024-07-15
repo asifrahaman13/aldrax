@@ -44,8 +44,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 assert SECRET_KEY, "Secret key is not set"
 logging.info("Secret key is set")
 
-OPEN_AI_API_KEY = os.getenv("OPENAI_API_KEY")
-assert OPEN_AI_API_KEY, "OpenAI client is not set"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+assert OPENAI_API_KEY, "OpenAI client is not set"
 logging.info("OpenAI client is set")
 
 

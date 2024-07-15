@@ -1,10 +1,9 @@
 import React from 'react';
-import Chat from './components/Chat';
 
-export default function Home() {
+export default function NotFound() {
   return (
     <React.Fragment>
-      <Chat />
+      <h1>404 - Page Not Found</h1>
     </React.Fragment>
   );
 }

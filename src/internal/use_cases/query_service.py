@@ -1,35 +1,57 @@
+import asyncio
+import json
 from typing import Any, AsyncGenerator, Dict
+from src.internal.entities.router_models import QueryResponse
 from src.internal.interfaces.services.query_interface import QueryInterface
-from src.constants.databases.available_databases import DatabaseKeys
 
 
 class QueryService(QueryInterface):
 
-    def __init__(self, query_database) -> None:
-        self.query_database = query_database
-        self.__db_keys = DatabaseKeys.get_keys()
+    def __init__(self, sqlite_repository, redis_repository, openai_repository) -> None:
+        self.sqlite_repository = sqlite_repository
+        self.redis_repository = redis_repository
+        self.openai_repository = openai_repository
 
-    async def query_db(
-        self, user: str, query: str, db: str
-    ) -> AsyncGenerator[Dict[str, Any], None]:
-        db_key = self.__db_keys.get(db)
-        if not db_key:
-            return
+    async def query_db(self, query: str) -> AsyncGenerator[Dict[str, Any], None]:
 
-        available_client = {
-            "_id": {"$oid": "6682efa74370bfd0532004ad"},
-            "username": "exampleUsser",
-            "sqlite": {
-                "db_type": "sqlite",
-                "projectName": "sqlite personal project",
-                "username": "root",
-                "description": "Working on a personal project to get insights on the data I have first to understand more on the project super query.",
-                "connectionString": "sqlite:///company.db",
-            },
-        }
-        if available_client and db_key in available_client:
-            connection_string = available_client[db_key]
-            async for response in self.query_database.query_database(
-                query, **connection_string
-            ):
-                yield response
+        await asyncio.sleep(0)
+        yield QueryResponse(message="Querying the database", status=True)
+        await asyncio.sleep(0)
+
+        # Check if the query is in the cache
+        cache_key = self.redis_repository.get_cached_key(query)
+        cached_result = self.redis_repository.get_cached_data(cache_key)
+
+        if cached_result:
+            results = json.loads(cached_result.decode("utf-8"))
+            headers = json.loads(
+                self.redis_repository.get_cached_data(f"{cache_key}_headers").decode(
+                    "utf-8"
+                )
+            )
+        else:
+            await asyncio.sleep(0)
+            yield QueryResponse(message="Thinking", status=True)
+            await asyncio.sleep(0)
+            # Get the SQL query from OpenAI
+            query_result = self.openai_repository.get_llm_response(query)
+
+            await asyncio.sleep(0)
+            yield QueryResponse(message="Executing the query", status=True)
+            await asyncio.sleep(0)
+            results, headers = self.sqlite_repository.query_database(
+                query_result, "databases/company.db"
+            )
+
+            # Store result in cache with expiration of 5 minutes
+            self.redis_repository.set_cache_data(cache_key, json.dumps(results))
+            self.redis_repository.set_cache_data(
+                f"{cache_key}_headers", json.dumps(headers)
+            )
+
+        if results:
+            await asyncio.sleep(0)
+            yield QueryResponse(json_message=results, message=results, status=False)
+            await asyncio.sleep(0)
+        else:
+            print("No results found.")

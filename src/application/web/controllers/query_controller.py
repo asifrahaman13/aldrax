@@ -20,9 +20,7 @@ async def query_sqlite(
         while True:
             user_input = await websocket.receive_json()
             query = user_input["query"]
-            async for response in query_service.query_db(
-                "exampleUsers", query, "sqlite"
-            ):
+            async for response in query_service.query_db(query):
                 await asyncio.sleep(0)
                 await manager.send_personal_message(response.model_dump(), websocket)
                 await asyncio.sleep(0)
