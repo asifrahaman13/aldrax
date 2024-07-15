@@ -8,7 +8,7 @@ const TableView = ({ tableData }: TableViewProps) => {
   const tableHeaders = tableData.length > 0 ? Object.keys(tableData[0]) : [];
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto  text-Pri-Dark ">
       {tableData.length !== 0 && (
         <div className="min-w-full">
           <div className="text-2xl font-semibold text-Pri-Dark mb-4">

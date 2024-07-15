@@ -60,7 +60,7 @@ const RenderConversation = ({
 
   return (
     <React.Fragment>
-      <div className="w-1/2 flex flex-col gap-4  justify-between my-6 h-full  p-6 bg-white rounded-2xl">
+      <div className="w-1/2 flex flex-col gap-4  justify-between h-full  p-6 bg-white rounded-2xl">
         <div className="overflow-y-scroll no-scrollbar h-full flex flex-col gap-2 text-justify bg-white">
           {conversationSlice.history.length > 0 && (
             <>
@@ -115,7 +115,7 @@ const RenderConversation = ({
           {!status.status ? (
             <button
               onClick={handleSubmit}
-              className="bg-orange-500 rounded-lg  p-3 px-5 font-semibold text-white"
+              className="bg-orange-400 rounded-lg  p-3 px-5 font-semibold text-white"
             >
               Submit
             </button>
