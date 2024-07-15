@@ -14,7 +14,7 @@ from fastapi import status
 from fastapi_limiter import FastAPILimiter
 from fastapi_limiter.depends import RateLimiter
 import os
-from config.config import REDIS_URL
+from config.config import REDIS_HOST, REDIS_PORT
 from src.application.web.controllers.query_controller import query_controller
 
 
@@ -50,7 +50,7 @@ async def lifespan(_: FastAPI):
     # Initialize Qdrant
     # search_repository.initialize_qdrant()
 
-    redis_connection = redis.from_url(REDIS_URL, encoding="utf8")
+    redis_connection = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
     await FastAPILimiter.init(
         redis=redis_connection,
         identifier=client_identifier,

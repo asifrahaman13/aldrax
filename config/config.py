@@ -23,10 +23,15 @@ class ServerConfig(BaseModel):
     host: str
     port: int
 
+class RedisConfig(BaseModel):
+    host: str
+    port: int
+    db: int
 
 class Config(BaseModel):
     app: AppConfig
     server: ServerConfig
+    redis: RedisConfig
 
 
 
@@ -49,18 +54,10 @@ assert OPENAI_API_KEY, "OpenAI client is not set"
 logging.info("OpenAI client is set")
 
 
-REDIS_PORT= os.getenv("REDIS_PORT")
+REDIS_PORT= config.redis.port
 assert REDIS_PORT, "Redis port is not set."
 logging.info("Redis port is set")
 
-REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_HOST = config.redis.host
 assert REDIS_HOST, "Redis host is not set."
 logging.info("Redis host is set")
-
-REDIS_URL= os.getenv("REDIS_URL")
-assert REDIS_URL, "Redis URL is not set."
-logging.info("Redis URL is set")
-
-REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
-assert REDIS_PASSWORD, "Redis password is not set."
-logging.info("Redis password is set")

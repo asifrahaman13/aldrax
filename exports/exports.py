@@ -5,7 +5,7 @@ from src.infastructure.repositories.redis_repository import RedisRepository
 from src.infastructure.repositories.sqlite_query_repository import SqliteQueryRepository
 from src.internal.use_cases.query_service import QueryService
 from src.ConnectionManager.ConnectionManager import ConnectionManager
-from config.config import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, OPENAI_API_KEY
+from config.config import REDIS_HOST, REDIS_PORT, OPENAI_API_KEY, REDIS_PORT, REDIS_HOST
 
 
 class DIContainer:
@@ -14,7 +14,7 @@ class DIContainer:
 
     def get_redis_repository(self):
         if "redis_repository" not in self.__instances:
-            redis_client = redis.Redis(host="localhost", port=6379, db=0)
+            redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
             self.__instances["redis_repository"] = RedisRepository(redis_client)
         return self.__instances["redis_repository"]
     
@@ -40,7 +40,7 @@ class DIContainer:
 
 
 container = DIContainer()
-websocket_manager = ConnectionManager(REDIS_HOST, REDIS_PORT, REDIS_PASSWORD)
+websocket_manager = ConnectionManager(REDIS_HOST, REDIS_PORT)
 
 
 def get_sqlite_query_database_service():
