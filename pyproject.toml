@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "aldrax"
+version = "0.1.0"
+description = ""
+authors = ["asifrahaman13 <asifrahaman162@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+pre-commit = "^3.7.1"
+sqlalchemy = "^2.0.31"
+pandas = "^2.2.2"
+redis = "^5.0.7"
+schedule = "^1.2.2"
+fastapi-limiter = "^0.1.6"
+sqlmodel = "^0.0.19"
+uvicorn = "^0.30.1"
+langchain-openai = "^0.1.16"
+openai = "^1.35.13"
+langchain = "^0.2.7"
+langchain-community = "^0.2.7"
+neo4j = "^5.22.0"
+psycopg2-binary = "^2.9.9"
+sqlite-vec = "^0.0.1a27"
+sqlite-vss = "^0.1.2"
+black = "^24.4.2"
+pytest = "^8.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
