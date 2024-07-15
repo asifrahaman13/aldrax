@@ -11,6 +11,7 @@ import {
   RenderConversationProps,
 } from '@/constants/types/type.dashboard';
 import TableView from './TableView';
+import SqlRender from './ui/SqlRender';
 
 const IconComponents: React.FC<IconComponentsProps> = ({ props }) => {
   const IconComponent = ICONS[props.slug];
@@ -49,6 +50,7 @@ const RenderConversation = ({
       dispatch(
         setHistory({
           message: conversationSlice.query,
+          sql_query: '',
           messageFrom: 'user',
           answer_type: null,
         })
@@ -58,16 +60,32 @@ const RenderConversation = ({
     }
   };
 
+  const data = 'SELECT * FROM users';
+
+  console.log(
+    '####################################',
+    conversationSlice.history
+  );
+
   return (
     <React.Fragment>
       <div className="w-1/2 flex flex-col gap-4  justify-between h-full  p-6 bg-white rounded-2xl">
         <div className="overflow-y-scroll no-scrollbar h-full flex flex-col gap-2 text-justify bg-white">
+          {/* <SqlRender sqlQuery={data} /> */}
           {conversationSlice.history.length > 0 && (
             <>
               {conversationSlice.history.map((item: HistoryItem, index) => (
                 <div key={index}>
                   {item?.messageFrom === 'chatbot' && (
-                    <TableView tableData={JSON.parse(item.message)} />
+                    <>
+                      {item?.answer_type === 'table_response' && (
+                        <TableView tableData={JSON.parse(item?.message)} />
+                      )}
+
+                      {item?.answer_type === 'sql_query' && (
+                        <SqlRender sqlQuery={item?.sql_query} />
+                      )}
+                    </>
                   )}
 
                   {item?.messageFrom === 'user' && (

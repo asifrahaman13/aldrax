@@ -15,35 +15,50 @@ class QueryService(QueryInterface):
     async def query_db(self, query: str) -> AsyncGenerator[Dict[str, Any], None]:
 
         await asyncio.sleep(0)
-        yield QueryResponse(message="Querying the database", status=True)
+        yield QueryResponse(
+            message="Querying the database", answer_type="status", status=True
+        )
         await asyncio.sleep(0)
 
         # Check if the query is in the cache
         cache_key = self.redis_repository.get_cached_key(query)
         cached_result = self.redis_repository.get_cached_data(cache_key)
+        cached_sql_query = self.redis_repository.get_cached_data(f"{cache_key}_sql")
 
-        if cached_result:
+        sql_query = None
+
+        if cached_result and cached_sql_query:
             results = json.loads(cached_result.decode("utf-8"))
             headers = json.loads(
                 self.redis_repository.get_cached_data(f"{cache_key}_headers").decode(
                     "utf-8"
                 )
             )
+            sql_query = cached_sql_query.decode("utf-8")
+            await asyncio.sleep(0)
+            yield QueryResponse(
+                sql_query=sql_query, answer_type="sql_query", status=False
+            )
+            await asyncio.sleep(0)
         else:
             await asyncio.sleep(0)
-            yield QueryResponse(message="Thinking", status=True)
+            yield QueryResponse(message="Thinking", answer_type="status", status=True)
             await asyncio.sleep(0)
             # Get the SQL query from OpenAI
             query_result = self.openai_repository.get_llm_response(query)
+            sql_query = query_result
 
             await asyncio.sleep(0)
-            yield QueryResponse(message="Executing the query", status=True)
+            yield QueryResponse(
+                message="Executing the query", answer_type="status", status=True
+            )
             await asyncio.sleep(0)
             results, headers = self.sqlite_repository.query_database(
                 query_result, "databases/company.db"
             )
 
-            # Store result in cache with expiration of 5 minutes
+            # Store SQL query and result in cache with expiration of 5 minutes
+            self.redis_repository.set_cache_data(f"{cache_key}_sql", query_result)
             self.redis_repository.set_cache_data(cache_key, json.dumps(results))
             self.redis_repository.set_cache_data(
                 f"{cache_key}_headers", json.dumps(headers)
@@ -51,7 +66,18 @@ class QueryService(QueryInterface):
 
         if results:
             await asyncio.sleep(0)
-            yield QueryResponse(json_message=results, message=results, status=False)
+            yield QueryResponse(
+                json_message=results,
+                message=results,
+                answer_type="table_response",
+                status=False,
+            )
+            await asyncio.sleep(0)
+
+            await asyncio.sleep(0)
+            yield QueryResponse(
+                sql_query=sql_query, answer_type="sql_query", status=False
+            )
             await asyncio.sleep(0)
         else:
             print("No results found.")

@@ -38,6 +38,9 @@ const TableView = ({ tableData }: TableViewProps) => {
           >
             Download CSV
           </button>
+          <div>
+            <h1 className="text-md font-semibold text-gray-700">Table Data</h1>
+          </div>
           <table className="min-w-full border-collapse">
             <thead>
               <tr className="bg-gray-200 font-bold text-Pri-Dark">

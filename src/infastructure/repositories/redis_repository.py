@@ -4,7 +4,7 @@ import hashlib
 class RedisRepository:
     def __init__(self, redis_client):
         self.redis_client = redis_client
-        self.timeout = 300
+        self.timeout = 3000
 
     def get_cached_key(self, query: str) -> str:
         return hashlib.md5(query.encode()).hexdigest()

@@ -16,6 +16,7 @@ export interface HistoryItem {
   message: string;
   messageFrom: string;
   answer_type?: string;
+  sql_query?: string;
 }
 
 export interface RenderConversationProps {

@@ -29,25 +29,34 @@ export default function Chat() {
 
     websocket.onmessage = (event) => {
       const parsedData = JSON.parse(event.data);
-      console.log('The parsed data is :', parsedData);
+      console.log('############ The parsed data is :', parsedData);
       if (parsedData.status === true) {
         setStatus({
           message: parsedData.message,
           status: true,
         });
         return;
+      }
+      if (parsedData.answer_type === 'sql_query') {
+        console.log('############ Triggered The parsed data is :', parsedData);
+        setStatus({
+          message: parsedData.sql_query,
+          status: false,
+        });
       } else {
         setStatus({
           message: 'Error in the query',
           status: false,
         });
       }
+
       console.log('##########################', status);
       dispatch(
         setHistory({
-          message: parsedData.message,
+          message: parsedData?.message,
+          sql_query: parsedData?.sql_query,
           messageFrom: 'chatbot',
-          answer_type: parsedData.answer_type,
+          answer_type: parsedData?.answer_type,
         })
       );
     };
