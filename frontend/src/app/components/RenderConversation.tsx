@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonStatus from './ui/ButtonStatus';
 import Skeleton from './ui/Skeleton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,13 +12,13 @@ import {
 } from '@/constants/types/type.dashboard';
 import TableView from './TableView';
 import SqlRender from './ui/SqlRender';
+import ErrorAlert from './ui/ErrorAlert';
 
 const IconComponents: React.FC<IconComponentsProps> = ({ props }) => {
   const IconComponent = ICONS[props.slug];
 
   if (!IconComponent) {
     console.error(`Icon component not found for slug: ${props.slug}`);
-    return null;
   }
 
   return (
@@ -38,9 +38,18 @@ const RenderConversation = ({
   const conversationSlice = useSelector(
     (state: RootState) => state.conversation
   );
-
+  const [alert, setAlert] = useState<boolean>(false);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    if (conversationSlice.query === null || conversationSlice.query === '') {
+      console.log('sorry not possible');
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 2000);
+      return;
+    }
 
     if (websocketRef.current) {
       const queryJson = JSON.stringify({ query: conversationSlice.query });
@@ -55,20 +64,13 @@ const RenderConversation = ({
           answer_type: null,
         })
       );
-
-      console.log(history);
     }
   };
 
-  const data = 'SELECT * FROM users';
-
-  console.log(
-    '####################################',
-    conversationSlice.history
-  );
-
   return (
     <React.Fragment>
+      {alert && <ErrorAlert />}
+
       <div className="w-1/2 flex flex-col gap-4  justify-between h-full  p-6 bg-white rounded-2xl">
         <div className="overflow-y-scroll no-scrollbar h-full flex flex-col gap-2 text-justify bg-white">
           {/* <SqlRender sqlQuery={data} /> */}
