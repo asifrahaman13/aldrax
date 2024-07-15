@@ -7,16 +7,40 @@ interface TableViewProps {
 const TableView = ({ tableData }: TableViewProps) => {
   const tableHeaders = tableData.length > 0 ? Object.keys(tableData[0]) : [];
 
+  const downloadCSV = () => {
+    const csvRows = [];
+    csvRows.push(tableHeaders.join(','));
+    for (const row of tableData) {
+      const values = tableHeaders.map((header) =>
+        JSON.stringify(row[header], replacer)
+      );
+      csvRows.push(values.join(','));
+    }
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tableData.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const replacer = (key: any, value: null) => (value === null ? '' : value);
+
   return (
-    <div className="overflow-x-auto  text-Pri-Dark ">
+    <div className="overflow-x-auto text-Pri-Dark">
       {tableData.length !== 0 && (
         <div className="min-w-full">
-          <div className="text-2xl font-semibold text-Pri-Dark mb-4">
-            🚀 My Result
-          </div>
+          <button
+            onClick={downloadCSV}
+            className="mb-4 px-4 py-2 bg-Pri-Dark text-white rounded"
+          >
+            Download CSV
+          </button>
           <table className="min-w-full border-collapse">
             <thead>
-              <tr className="0 font-bold text-Pri-Dark">
+              <tr className="bg-gray-200 font-bold text-Pri-Dark">
                 {tableHeaders.map((header) => (
                   <th key={header} className="p-2 border">
                     {header}

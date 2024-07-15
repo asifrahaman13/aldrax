@@ -64,7 +64,7 @@ export default function Chat() {
 
   return (
     <React.Fragment>
-      <div className="w-full items-center py-4 justify-center h-screen overflow-y-hidden flex flex-col bg-gray-100">
+      <div className="w-full items-center py-4 justify-center h-screen overflow-y-hidden flex flex-col bg-gray-50">
         <RenderConversation
           websocketRef={websocketRef}
           texts={conversationStaticTexts}
