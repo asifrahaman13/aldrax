@@ -60,7 +60,7 @@ const RenderConversation = ({
 
   return (
     <React.Fragment>
-      <div className="w-1/2 flex flex-col gap-4  justify-between mb-12 h-full  p-6 bg-white rounded-2xl">
+      <div className="w-1/2 flex flex-col gap-4  justify-between my-6 h-full  p-6 bg-white rounded-2xl">
         <div className="overflow-y-scroll no-scrollbar h-full flex flex-col gap-2 text-justify bg-white">
           {conversationSlice.history.length > 0 && (
             <>
@@ -72,7 +72,7 @@ const RenderConversation = ({
 
                   {item?.messageFrom === 'user' && (
                     <div className=" w-3/4 max-w-3/4  ml-auto flex justify-end ">
-                      <p className="bg-gray-200  rounded-md p-2">
+                      <p className="bg-orange-400 text-white rounded-md p-2">
                         {item.message}
                       </p>
                     </div>
@@ -115,7 +115,7 @@ const RenderConversation = ({
           {!status.status ? (
             <button
               onClick={handleSubmit}
-              className="bg-Pri-Dark rounded-lg  p-3 px-5 font-semibold text-black"
+              className="bg-orange-500 rounded-lg  p-3 px-5 font-semibold text-white"
             >
               Submit
             </button>
