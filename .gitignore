@@ -137,4 +137,4 @@ cython_debug/
 
 node_modules/
 
-databases
+*.csv
