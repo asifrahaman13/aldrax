@@ -1,12 +1,14 @@
 ## About the application 👨🏻‍🚀
 
-![Screenshot from 2024-07-15 23-06-05](https://github.com/user-attachments/assets/3fba2072-8970-4ebe-b843-78b71d38f3c1)
 
-![Screenshot from 2024-07-15 23-08-21](https://github.com/user-attachments/assets/730e8195-960c-4189-aa4f-0fab064d02ff)
+![Screenshot from 2024-07-16 23-02-06](https://github.com/user-attachments/assets/73b40d29-56db-4e78-b8ee-a591cc709b3f)
 
-![Screenshot from 2024-07-15 23-10-16](https://github.com/user-attachments/assets/94cbcdf2-3e66-4306-85b1-b4fd5b1778b2)
+![Screenshot from 2024-07-16 23-14-50](https://github.com/user-attachments/assets/e74fcef3-0c26-48cb-8997-b9eb8206f76a)
 
-![Screenshot from 2024-07-15 23-13-38](https://github.com/user-attachments/assets/7b014cab-75bb-4e6b-b596-acac5b18a2db)
+![Screenshot from 2024-07-16 22-53-11](https://github.com/user-attachments/assets/c1b850be-3112-4bcb-91ff-a91c342100f3)
+
+![Screenshot from 2024-07-16 22-57-03](https://github.com/user-attachments/assets/b81f25b0-ea4f-466a-9bf5-9a4aa16a15ec)
+
 
 
 - First, pull the repository. `git clone https://github.com/asifrahaman13/aldrax.git`
