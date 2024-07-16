@@ -12,48 +12,7 @@ class Prompt:
     CREATE TABLE people (id INTEGER NOT NULL PRIMARY KEY,first_name TEXT, middle_name TEXT,last_name TEXT,job_title TEXT,person_city TEXT,person_state TEXT,person_country TEXT,email_pattern TEXT,homepage_base_url TEXT,duration_in_current_job TEXT,duration_in_current_company TEXT);\n
              
     Give me the SQL query corresonspoing to the user prompt. Example.
-             
-    1. 
-    User prompt: Find me events that companies in Pharmaceuticals sector are attending
-    SQL query: ```sql
-                SELECT e.*
-                FROM events e
-                INNER JOIN companies c ON e.event_url = c.event_url
-                WHERE LOWER(c.company_industry) LIKE '%pharmaceutical%';```\n
-             
-    2. User prompt: Find me companies that are attending Oil & Gas related events over the next 12 months
-    SQL query:  ```sql
-                SELECT DISTINCT c.company_name
-                FROM companies c
-                INNER JOIN events e ON c.event_url = e.event_url
-                WHERE LOWER(c.company_industry) LIKE '%oil%' AND LOWER(c.company_industry) LIKE '%gas%'
-                AND (e.event_start_date >= DATE('now') AND e.event_start_date <= DATE('now', '+5 months'));```\n
-    3. User prompt: Find sales people for companies that are attending events in Singapore over the next 9 months.
-    SQL query:  ```sql
-                SELECT DISTINCT p.*
-                FROM people p
-                INNER JOIN companies c ON p.homepage_base_url = c.homepage_base_url
-                INNER JOIN events e ON c.event_url = e.event_url
-                WHERE LOWER(c.company_address) LIKE '%singapore%'
-                AND (e.event_start_date >= DATE('now') AND e.event_start_date <= DATE('now', '+6 months'))
-                AND LOWER(p.job_title) LIKE '%sales%';```\n
-    4. User prompt: I need the email addresses of people working for companies that are attending finance and banking events
-    SQL query:  ```sql
-                SELECT first_name
-                FROM people p
-                INNER JOIN companies c ON p.homepage_base_url = c.homepage_base_url
-                INNER JOIN events e ON c.event_url = e.event_url
-                WHERE LOWER(c.company_industry) LIKE '%finance%' OR LOWER(c.company_industry) LIKE '%banking%';```\n
-    5. User prompt: Find first 10 entries for first name and profession of the people for companies that are attending events in Singapore over the next 12 months and who are Engineer by job title
-    SQL query: ```sql
-              SELECT p.first_name, p.job_title
-              FROM people p
-              INNER JOIN companies c ON p.homepage_base_url = c.homepage_base_url
-              INNER JOIN events e ON c.event_url = e.event_url
-              WHERE e.event_country = 'Singapore'
-              AND (e.event_start_date >= DATE('now') AND e.event_start_date <= DATE('now', '+12 months'))
-              AND LOWER(p.job_title) LIKE '%engineer%'
-              LIMIT 10;```\n
+             Take the example to get insignts on how to generate the sql query. 
              """
 
     @classmethod

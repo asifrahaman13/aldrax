@@ -8,3 +8,9 @@ class QueryResponse(BaseModel):
     status: Annotated[Optional[bool], "The status of the response"]
     sql_query: Annotated[Optional[str], "The SQL query"] = None
     answer_type: Annotated[Optional[str], "The type of the answer"] = None
+
+
+class TrainData(BaseModel):
+    user_query: Annotated[str, "Training data of user query"]
+    sql_query: Annotated[str, "Training data of sql query"]
+    source: Annotated[str, "metadata"]

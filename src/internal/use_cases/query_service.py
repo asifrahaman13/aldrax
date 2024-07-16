@@ -1,6 +1,6 @@
 import asyncio
 import json
-from typing import Any, AsyncGenerator, Dict
+from typing import Any, AsyncGenerator, Dict, List
 from src.internal.entities.router_models import QueryResponse
 from src.internal.interfaces.services.query_interface import QueryInterface
 
@@ -66,6 +66,12 @@ class QueryService(QueryInterface):
             )
             await asyncio.sleep(0)
 
+            await asyncio.sleep(0)
+            yield QueryResponse(
+                sql_query=sql_query, answer_type="sql_query", status=False
+            )
+            await asyncio.sleep(0)
+
             # Get the SQL query from OpenAI
 
             results, headers = self.sqlite_repository.query_database(
@@ -89,10 +95,20 @@ class QueryService(QueryInterface):
             )
             await asyncio.sleep(0)
 
-            await asyncio.sleep(0)
-            yield QueryResponse(
-                sql_query=sql_query, answer_type="sql_query", status=False
-            )
-            await asyncio.sleep(0)
         else:
             print("No results found.")
+
+    def add_data_to_vector_db(
+        self, user_query: str, sql_query: str, source: List[Dict[str, Any]]
+    ):
+
+        data = [
+            {
+                "text": f"User prompt: {user_query}\n Sql query: {sql_query}",
+                "source": source,
+            }
+        ]
+        # Separate texts and metadata for initialization
+        texts = [item["text"] for item in data]
+        metadata = [{k: v for k, v in item.items() if k != "text"} for item in data]
+        return self.vector_db_repository.initialize_qdrant(texts, metadata)

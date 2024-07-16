@@ -16,6 +16,7 @@ from fastapi_limiter.depends import RateLimiter
 import os
 from config.config import REDIS_HOST, REDIS_PORT
 from src.application.web.controllers.query_controller import query_controller
+from src.application.web.controllers.data_points_controller import data_points
 
 
 # Configure logging
@@ -77,6 +78,8 @@ app.include_router(
     prefix="/query",
     tags=["Query router"],
 )
+
+app.include_router(data_points, prefix="/train", tags=["Add more contexts"])
 
 
 # Define the jobs

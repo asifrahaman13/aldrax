@@ -60,10 +60,14 @@ class QdrantService:
                 raise e
 
     def create_collection(self, collection_name):
-        self.__client.recreate_collection(
-            collection_name=collection_name,
-            vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
-        )
+
+        if self.collection_exists:
+            pass
+        else:
+            self.__client.create_collection(
+                collection_name=collection_name,
+                vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
+            )
 
     def upsert_points(self, collection_name, points):
         self.__client.upsert(collection_name=collection_name, points=points)
@@ -100,9 +104,11 @@ class QdrantQueryRepository:
     def prepare_points(
         self, texts: List[str], metadata: List[Dict]
     ) -> List[PointStruct]:
+        import uuid
+
         return [
             PointStruct(
-                id=idx,
+                id=str(uuid.uuid4()),
                 vector=self.__embedding_service.get_embeddings(text),
                 payload={"text": text, **meta},
             )
@@ -117,8 +123,9 @@ class QdrantQueryRepository:
 
     def initialize_qdrant(self, texts: List[str], metadata: List[Dict]):
         points = self.prepare_points(texts, metadata)
-        self.__qdrant_service.create_collection("sample_collection")
+        # self.__qdrant_service.create_collection("sample_collection")
         self.__qdrant_service.upsert_points("sample_collection", points)
+        return True
 
     def query_text(self, query_text: str, id: str):
         try:

@@ -1,8 +1,8 @@
 const conversationStaticTexts = [
-  'Can you tell me the total number of users in the users table.',
-  'I want bar graph on the users table to display the marks of the users. The x axis should be the address Group it by the address.',
-  'I want line graph of the price of all the products in the sales table. y axis should contain the qrantity, x axis the sales data, labels will the the product names. Fetch all the entries',
-  'I want bar graph on the users table to display the marks of the users. The x axis should be the name of the user y axis the marks',
+  'Find me events that companies in Pharmaceuticals sector are attending',
+  'Find me companies that are attending Oil & Gas related events over the next 12 months',
+  'Find sales people for companies that are attending events in Singapore over the next 9 months.',
+  'Find first 10 entries for first name and profession of the people for companies that are attending events in Singapore over the next 12 months and who are Engineer by job title',
 ];
 
 const team = [
