@@ -7,10 +7,17 @@ from src.internal.interfaces.services.query_interface import QueryInterface
 
 class QueryService(QueryInterface):
 
-    def __init__(self, sqlite_repository, redis_repository, openai_repository) -> None:
+    def __init__(
+        self,
+        sqlite_repository,
+        redis_repository,
+        openai_repository,
+        vector_db_repository,
+    ) -> None:
         self.sqlite_repository = sqlite_repository
         self.redis_repository = redis_repository
         self.openai_repository = openai_repository
+        self.vector_db_repository = vector_db_repository
 
     async def query_db(self, query: str) -> AsyncGenerator[Dict[str, Any], None]:
 
@@ -44,8 +51,13 @@ class QueryService(QueryInterface):
             await asyncio.sleep(0)
             yield QueryResponse(message="Thinking", answer_type="status", status=True)
             await asyncio.sleep(0)
-            # Get the SQL query from OpenAI
-            query_result = self.openai_repository.get_llm_response(query)
+            # Get top 5 result from the vector database and then pass it to the llm for context.
+            top_suggestions = self.vector_db_repository.query_text(query, "1")
+
+            print("######################### top result", top_suggestions)
+            query_result = self.openai_repository.get_llm_response(
+                query, top_suggestions
+            )
             sql_query = query_result
 
             await asyncio.sleep(0)
@@ -53,6 +65,9 @@ class QueryService(QueryInterface):
                 message="Executing the query", answer_type="status", status=True
             )
             await asyncio.sleep(0)
+
+            # Get the SQL query from OpenAI
+
             results, headers = self.sqlite_repository.query_database(
                 query_result, "databases/company.db"
             )

@@ -1,5 +1,7 @@
 class Prompt:
     prompt = """You are a master in sqlite query. You are going to help me with generating sqlite query from the natural langauge. I will provide you the natural language query and you will convert it into sqlite query. Take care of all the details of the user query. Each small information of the user query matters. Depending upon that generate accurate sql query for sqlite.\n
+
+    Give only the sql command. Do not give any other text or information. Remember to take care of all the details of the user query. Each small information of the user query matters. Depending upon that generate accurate sql query for sqlite.
              
     We have three tables. They are created with the following SQL commands:\n
 
@@ -52,8 +54,6 @@ class Prompt:
               AND (e.event_start_date >= DATE('now') AND e.event_start_date <= DATE('now', '+12 months'))
               AND LOWER(p.job_title) LIKE '%engineer%'
               LIMIT 10;```\n
-
-             Give only the sql command. Do not give any other text or information. Remember to take care of all the details of the user query. Each small information of the user query matters. Depending upon that generate accurate sql query for sqlite.
              """
 
     @classmethod
