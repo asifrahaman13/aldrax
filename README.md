@@ -11,6 +11,10 @@ Full stack application to io interact with sample sqlite database.
 ![Screenshot from 2024-07-16 22-57-03](https://github.com/user-attachments/assets/b81f25b0-ea4f-466a-9bf5-9a4aa16a15ec)
 
 
+## Architecture 🚀
+
+![aldraxdrawio drawio](https://github.com/user-attachments/assets/69499ac4-5736-46a6-ae74-4ba6b786b6b3)
+
 
 - First, pull the repository. `git clone https://github.com/asifrahaman13/aldrax.git`
 
