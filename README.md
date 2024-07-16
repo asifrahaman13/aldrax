@@ -1,5 +1,6 @@
 ## About the application 👨🏻‍🚀
 
+Full stack application to io interact with sample sqlite database.
 
 ![Screenshot from 2024-07-16 23-02-06](https://github.com/user-attachments/assets/73b40d29-56db-4e78-b8ee-a591cc709b3f)
 
@@ -13,7 +14,7 @@
 
 - First, pull the repository. `git clone https://github.com/asifrahaman13/aldrax.git`
 
-- Go to the root directory. `cd superquery`
+- Go to the root directory. `cd aldrax`
 
 - Enable virtual environment for the poetry. `poetry config virtualenvs.in-project true`
 
