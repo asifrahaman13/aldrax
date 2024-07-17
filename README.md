@@ -1,6 +1,6 @@
 ## About the application 👨🏻‍🚀
 
-Full stack application to io interact with sample sqlite database.
+Full stack application to io interact with sample SQLite database through natural language. Users can interact in natural language. Train the existing system with more simple queries to make the system more accurate.
 
 ![Screenshot from 2024-07-16 23-02-06](https://github.com/user-attachments/assets/73b40d29-56db-4e78-b8ee-a591cc709b3f)
 
