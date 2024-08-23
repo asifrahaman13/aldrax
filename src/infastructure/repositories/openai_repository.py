@@ -10,7 +10,9 @@ class OpenAIRepository:
         combined_prompt = Prompt.get_prompt()
 
         for item in top_suggestions:
-            combined_prompt.join(item["text"])
+            combined_prompt+=f"\n{item["text"]}\n"
+
+        print(combined_prompt)
 
         completion = self.openai_client.chat.completions.create(
             model="gpt-4o",

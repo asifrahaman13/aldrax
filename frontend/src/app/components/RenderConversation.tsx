@@ -72,7 +72,7 @@ const RenderConversation = ({
       {alert && <ErrorAlert />}
 
       <div className="w-3/5 flex flex-col gap-4  justify-between h-full  p-6 bg-white rounded-2xl">
-        <div className="overflow-y-scroll no-scrollbar h-full flex flex-col gap-2 text-justify bg-white">
+        <div className="overflow-y-scroll h-full flex flex-col gap-2 text-justify bg-white">
           {/* <SqlRender sqlQuery={data} /> */}
           {conversationSlice.history.length > 0 && (
             <>

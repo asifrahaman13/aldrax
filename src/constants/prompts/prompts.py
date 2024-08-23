@@ -11,9 +11,11 @@ class Prompt:
              
     CREATE TABLE people (id INTEGER NOT NULL PRIMARY KEY,first_name TEXT, middle_name TEXT,last_name TEXT,job_title TEXT,person_city TEXT,person_state TEXT,person_country TEXT,email_pattern TEXT,homepage_base_url TEXT,duration_in_current_job TEXT,duration_in_current_company TEXT);\n
              
-    Give me the SQL query corresonspoing to the user prompt. Example.
-             Take the example to get insignts on how to generate the sql query. 
-             """
+    Give me the SQL query corresonspoing to the user prompt.\n You will be given some few examples of previous correct sql query corresponding to the users query. You need to take them into account to give more accurate response.
+    Take the example to get insignts on how to generate the sql query. \n
+
+    The examples are as follows: \n
+    """
 
     @classmethod
     def get_prompt(cls):

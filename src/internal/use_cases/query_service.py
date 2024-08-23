@@ -54,7 +54,8 @@ class QueryService(QueryInterface):
             # Get top 5 result from the vector database and then pass it to the llm for context.
             top_suggestions = self.vector_db_repository.query_text(query, "1")
 
-            print("######################### top result", top_suggestions)
+            print(top_suggestions)
+ 
             query_result = self.openai_repository.get_llm_response(
                 query, top_suggestions
             )

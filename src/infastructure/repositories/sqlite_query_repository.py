@@ -1,9 +1,5 @@
-import asyncio
 import json
 import sqlite3
-from sqlmodel import SQLModel, Session, create_engine
-from sqlalchemy import text
-
 
 class SqliteQueryRepository:
     def __init__(self) -> None:
